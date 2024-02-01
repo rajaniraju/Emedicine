@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import  { useState } from 'react';
 import './Registration.css';
 import Link from '@mui/joy/Link';
@@ -8,6 +8,7 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Sheet from '@mui/joy/Sheet'; 
 import Button from '@mui/joy/Button';
+import axios from 'axios';
 
 function Register() {
   const [firstname, setFirstname] = useState('');
@@ -30,14 +31,34 @@ function Register() {
     setPassword(event.target.value);
   }
   
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    const data = {
+      "firstName": firstname,
+      "lastName": lastname,
+      "password": password,
+      "email": email,
+      "type": "user",
+    }
+    const url = "https://localhost:7148/api/Users/registration";
+    console.log(data)
+    try {
+      const response = await axios.post(url, data);
+      console.log(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+
+    
+
     // Add your registration logic here
-    console.log("First Name:", firstname);
+    /*console.log("First Name:", firstname);
     console.log("Last Name:", lastname);
     console.log("Email:", email);
-    console.log("Password is:", password);
+    console.log("Password is:", password);*/
   }
+  
   
   return (
     <div className="register-container">
