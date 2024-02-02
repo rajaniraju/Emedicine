@@ -2,6 +2,7 @@
 
 
 import * as React from 'react';
+
 import { useColorScheme } from '@mui/joy/styles';
 import Sheet from '@mui/joy/Sheet';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -41,6 +42,7 @@ export default function Login() {
   return (
     <main>
       <ModeToggle />
+      
       <CssBaseline />
       <Sheet
         sx={{
@@ -58,9 +60,11 @@ export default function Login() {
         variant="outlined"
       >
         <div>
+        
           <Typography level="h4" component="h1">
             <b>Welcome!</b>
           </Typography>
+          
           <Typography level="body-sm">Sign in to continue.</Typography>
         </div>
         <FormControl>
@@ -88,6 +92,7 @@ export default function Login() {
           sx={{ alignSelf: 'center' }}
         >
           Don&apos;t have an account?
+          {<Link href='/dashbaord'>view header</Link>}
         </Typography>
       </Sheet>
     </main>

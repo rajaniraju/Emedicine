@@ -20,7 +20,7 @@ namespace EMedicineBe.Models
             cmd.Parameters.AddWithValue("@Password", users.Password);
             cmd.Parameters.AddWithValue("@Email", users.Email);
             //cmd.Parameters.AddWithValue("@Fund", 0);
-            cmd.Parameters.AddWithValue("@Type", "Users");
+            cmd.Parameters.AddWithValue("@Type", "Admin");
             //cmd.Parameters.AddWithValue("@Status", "0");
 
             connection.Open();
