@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useColorScheme } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
 import CssBaseline from "@mui/joy/CssBaseline";
@@ -40,6 +40,7 @@ function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [activeUser, setActiveuser] = useState(false);
+	const [username, setUserName] = useState(" ");
 	var responseData = " ";
 
 	const handleEmailChange = (event) => {
@@ -49,6 +50,9 @@ function Login() {
 	const handlePasswordChange = (event) => {
 		setPassword(event.target.value);
 	};
+	useEffect(() => {
+		console.log(username);
+	}, [username]);
 	const getUser = async (e) => {
 		e.preventDefault();
 		const data = {
@@ -71,11 +75,13 @@ function Login() {
 
 		if (responseData.statusCode === 200) {
 			setActiveuser(true);
+			setUserName(responseData.user.firstName);
+			console.log(responseData.user.firstName);
 		}
 	};
 
 	return activeUser ? (
-		<Dashboard />
+		<Dashboard user={username} />
 	) : (
 		<main>
 			<ModeToggle />

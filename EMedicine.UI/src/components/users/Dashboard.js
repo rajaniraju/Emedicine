@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "../Header";
 
-export default function Dashboard() {
+export default function Dashboard(props) {
+    console.log(props)
 	return (
 		<>
-			<Header />
+			<Header name={props} />
 			<h1>Dashboard</h1>
 		</>
 	);

@@ -3,7 +3,7 @@ import "./Header.css";
 
 function Header(props) {
 	//[user, setUser] = useState(" ");
-
+	console.log(props.name.user);
 	return (
 		<ul>
 			<li>
@@ -22,11 +22,13 @@ function Header(props) {
 				<a href='/products'>Medicines</a>
 			</li>
 			<li className='rightlist'>
-				<a href='/profile'>Logout</a>
+				<a href='/'>Logout</a>
 			</li>
-
 			<li className='rightlist'>
-				<a href='/profile'>Welcome {}</a>
+				<a href='/profile'>{props.name.user}</a>
+			</li>
+			<li className='rightlist'>
+				<a href='/profile'>Welcome </a>
 			</li>
 		</ul>
 	);

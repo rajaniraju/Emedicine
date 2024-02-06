@@ -79,7 +79,7 @@ namespace EMedicineBe.Models
 
         public Response viewUser(Users users, SqlConnection connection)
         {
-            SqlDataAdapter adapter = new SqlDataAdapter("p_viewUser", connection);
+            SqlDataAdapter adapter = new SqlDataAdapter("sp_viewUser", connection);
 
             adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
 
