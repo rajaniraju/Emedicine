@@ -50,7 +50,7 @@ namespace EMedicineBe.Models
             adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
             adapter.SelectCommand.Parameters.AddWithValue("@Email", users.Email);
             adapter.SelectCommand.Parameters.AddWithValue("@Password", users.Password);
-            adapter.SelectCommand.Parameters.AddWithValue("@Type", users.Type);
+            //adapter.SelectCommand.Parameters.AddWithValue("@Type", users.Type);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
             Response response = new Response();

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Header.css";
 
-function Header() {
+function Header(props) {
+	//[user, setUser] = useState(" ");
+
 	return (
 		<ul>
 			<li>
@@ -18,6 +20,13 @@ function Header() {
 			</li>
 			<li>
 				<a href='/products'>Medicines</a>
+			</li>
+			<li className='rightlist'>
+				<a href='/profile'>Logout</a>
+			</li>
+
+			<li className='rightlist'>
+				<a href='/profile'>Welcome {}</a>
 			</li>
 		</ul>
 	);

@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { useState } from "react";
 import { useColorScheme } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
 import CssBaseline from "@mui/joy/CssBaseline";
@@ -9,6 +9,8 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import Link from "@mui/joy/Link";
+import axios from "axios";
+import Dashboard from "./users/Dashboard";
 
 function ModeToggle() {
 	const { mode, setMode } = useColorScheme();
@@ -34,8 +36,47 @@ function ModeToggle() {
 	);
 }
 
-export default function Login() {
-	return (
+function Login() {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [activeUser, setActiveuser] = useState(false);
+	var responseData = " ";
+
+	const handleEmailChange = (event) => {
+		setEmail(event.target.value);
+	};
+
+	const handlePasswordChange = (event) => {
+		setPassword(event.target.value);
+	};
+	const getUser = async (e) => {
+		e.preventDefault();
+		const data = {
+			firstName: "",
+			lastName: "",
+			password: password,
+			email: email,
+			type: "",
+		};
+		const url = "https://localhost:7148/api/Users/login";
+		try {
+			const response = await axios.post(url, data);
+			console.log(response.data);
+
+			responseData = response.data;
+			console.log(responseData.user);
+		} catch (error) {
+			console.log(error);
+		}
+
+		if (responseData.statusCode === 200) {
+			setActiveuser(true);
+		}
+	};
+
+	return activeUser ? (
+		<Dashboard />
+	) : (
 		<main>
 			<ModeToggle />
 
@@ -65,21 +106,27 @@ export default function Login() {
 					<FormLabel>Email</FormLabel>
 					<Input
 						// html input attribute
-						name='email'
+
+						value={email}
 						type='email'
 						placeholder='johndoe@email.com'
+						onChange={handleEmailChange}
 					/>
 				</FormControl>
 				<FormControl>
 					<FormLabel>Password</FormLabel>
 					<Input
 						// html input attribute
-						name='password'
+
+						value={password}
 						type='password'
 						placeholder='password'
+						onChange={handlePasswordChange}
 					/>
 				</FormControl>
-				<Button sx={{ mt: 1 /* margin top */ }}>Log in</Button>
+				<Button sx={{ mt: 1 /* margin top */ }} onClick={getUser}>
+					Log in
+				</Button>
 				<Typography
 					endDecorator={<Link href='/registration'>Sign up</Link>}
 					fontSize='sm'
@@ -91,3 +138,4 @@ export default function Login() {
 		</main>
 	);
 }
+export default Login;

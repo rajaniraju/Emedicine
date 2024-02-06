@@ -1,8 +1,11 @@
-import React from 'react';
-
+import React from "react";
+import Header from "../Header";
 
 export default function Profile() {
-    return (
-        <div>Profile</div>
-    )
+	return (
+		<>
+			<Header />
+			<div>Profile</div>
+		</>
+	);
 }

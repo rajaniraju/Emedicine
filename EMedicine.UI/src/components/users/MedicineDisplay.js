@@ -1,8 +1,11 @@
 import React from 'react';
-
+import Header from "../Header";
 
 export default function MedicineDisplay() {
     return (
-        <div>MedicineDisplay</div>
-    )
+			<>
+				<Header />
+				<div>MedicineDisplay</div>
+			</>
+		);
 }

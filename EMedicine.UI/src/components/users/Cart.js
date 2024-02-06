@@ -1,8 +1,11 @@
 import React from 'react';
-
+import Header from "../Header";
 
 export default function Cart() {
     return (
-        <div>Cart</div>
-    )
+			<>
+				<Header />
+				<h1>Cart</h1>
+			</>
+		);
 }
