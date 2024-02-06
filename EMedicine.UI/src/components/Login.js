@@ -11,6 +11,7 @@ import Button from "@mui/joy/Button";
 import Link from "@mui/joy/Link";
 import axios from "axios";
 import Dashboard from "./users/Dashboard";
+import Admindashboard from "./admin/AdminDashboard";
 
 function ModeToggle() {
 	const { mode, setMode } = useColorScheme();
@@ -41,6 +42,7 @@ function Login() {
 	const [password, setPassword] = useState("");
 	const [activeUser, setActiveuser] = useState(false);
 	const [username, setUserName] = useState(" ");
+	const [isadmin, setIsadmin] = useState(false);
 	var responseData = " ";
 
 	const handleEmailChange = (event) => {
@@ -52,7 +54,8 @@ function Login() {
 	};
 	useEffect(() => {
 		console.log(username);
-	}, [username]);
+		console.log(isadmin);
+	}, [username, isadmin]);
 	const getUser = async (e) => {
 		e.preventDefault();
 		const data = {
@@ -76,12 +79,19 @@ function Login() {
 		if (responseData.statusCode === 200) {
 			setActiveuser(true);
 			setUserName(responseData.user.firstName);
+			if (responseData.user.type === "Admin") {
+				setIsadmin(true);
+			}
 			console.log(responseData.user.firstName);
 		}
 	};
 
 	return activeUser ? (
-		<Dashboard user={username} />
+		isadmin ? (
+			<Admindashboard user={username} />
+		) : (
+			<Dashboard user={username} isadmin={isadmin} />
+		)
 	) : (
 		<main>
 			<ModeToggle />

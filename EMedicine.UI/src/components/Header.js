@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+//import React, { useEffect, useState } from "react";
 import "./Header.css";
 
 function Header(props) {
-	//[user, setUser] = useState(" ");
+	//const [user, setUser] = useState(" ");
+	console.log(props.name.isadmin);
 	console.log(props.name.user);
+
 	return (
 		<ul>
 			<li>
@@ -28,7 +30,7 @@ function Header(props) {
 				<a href='/profile'>{props.name.user}</a>
 			</li>
 			<li className='rightlist'>
-				<a href='/profile'>Welcome </a>
+				<a href='/profile'> Welcome User </a>
 			</li>
 		</ul>
 	);
