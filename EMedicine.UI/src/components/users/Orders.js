@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../Header";
 
-export default function Orders() {
+export default function Orders(props) {
 	return (
 		<>
-			<Header />
+			<Header name={props} />
 			<div>Orders</div>
 		</>
 	);

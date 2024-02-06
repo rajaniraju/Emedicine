@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import Header from "../Header";
 
-export default function MedicineDisplay() {
-    return (
-			<>
-				<Header />
-				<div>MedicineDisplay</div>
-			</>
-		);
+export default function MedicineDisplay(props) {
+	return (
+		<>
+			<Header name={props} />
+			<div>MedicineDisplay</div>
+		</>
+	);
 }

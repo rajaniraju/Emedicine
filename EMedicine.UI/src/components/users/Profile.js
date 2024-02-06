@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../Header";
 
-export default function Profile() {
+export default function Profile(props) {
 	return (
 		<>
-			<Header />
+			<Header name={props} />
 			<div>Profile</div>
 		</>
 	);

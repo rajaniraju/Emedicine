@@ -1,8 +1,11 @@
-import React from 'react';
+import React from "react";
+import AdminHeader from "./AdminHeader";
 
-
-export default function Medicine() {
-    return (
-        <div>Medicine</div>
-    )
+export default function Medicine(props) {
+	return (
+		<>
+			<AdminHeader name={props} />
+			<div>Medicine</div>
+		</>
+	);
 }

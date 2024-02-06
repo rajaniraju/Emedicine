@@ -3,8 +3,8 @@ import "./Header.css";
 
 function Header(props) {
 	//const [user, setUser] = useState(" ");
-	console.log(props.name.isadmin);
-	console.log(props.name.user);
+	
+
 
 	return (
 		<ul>
