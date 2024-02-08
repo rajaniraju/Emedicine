@@ -148,7 +148,7 @@ function Login() {
 					fontSize='sm'
 					sx={{ alignSelf: "center" }}>
 					Don&apos;t have an account?
-					{<Link href='/dashboard'>view header</Link>}
+					
 				</Typography>
 			</Sheet>
 		</main>

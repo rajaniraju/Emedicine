@@ -1,13 +1,13 @@
-﻿using System.Data.SqlClient;
-using System.Data;
-using System.Text.Json.Serialization;
+﻿using System.Data;
+using System.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 
 namespace EMedicineBe.Models
 {
     public class Dal //For database logic
     {
         //For users
-
+        // To Do             Handle null exception for all the data variables...
         public Response register(Users users, SqlConnection connection)
         {
             Response response = new Response();
@@ -58,9 +58,11 @@ namespace EMedicineBe.Models
             if (dt.Rows.Count > 0)
             {
                 user.ID = Convert.ToInt32(dt.Rows[0]["ID"]);
+                
+
                 user.FirstName = Convert.ToString(dt.Rows[0]["FirstName"]);
-                user.LastName = Convert.ToString(dt.Rows[0]["LastName"]);
-                user.Email = Convert.ToString(dt.Rows[0]["Email"]);
+                user.LastName = dt.Rows[0]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[0]["LastName"]);
+                user.Email = Convert.ToString(dt.Rows[0]["Email"]); 
                 user.Type = Convert.ToString(dt.Rows[0]["Type"]);
                 response.StatusCode = 200;
                 response.StatusMessage = "User is valid";
@@ -268,7 +270,7 @@ namespace EMedicineBe.Models
             cmd.Parameters.AddWithValue("@Status", medicines.Status);
             cmd.Parameters.AddWithValue("@Type", medicines.Type);
             connection.Open();
-            int i= cmd.ExecuteNonQuery();
+            int i = cmd.ExecuteNonQuery();
             connection.Close();
             if (i > 0)
             {
@@ -284,7 +286,7 @@ namespace EMedicineBe.Models
             return response;
         }
 
-        public Response userList( SqlConnection connection)
+        public Response userList(SqlConnection connection)
         {
             Response response = new Response();
             List<Users> listUsers = new List<Users>();
@@ -300,14 +302,14 @@ namespace EMedicineBe.Models
 
                     Users user = new Users();
                     user.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                    user.FirstName = Convert.ToString(dt.Rows[i]["FirstName"]);
-                    user.LastName = Convert.ToString(dt.Rows[i]["LastName"]);
-                    user.Password = Convert.ToString(dt.Rows[i]["Password"]);
-                    user.Email = Convert.ToString(dt.Rows[i]["Email"]);
-                    user.Fund = Convert.ToDecimal(dt.Rows[i]["Fund"]);
-                    user.Type = Convert.ToString(dt.Rows[i]["Type"]);
-                    user.Status = Convert.ToInt32(dt.Rows[i]["Status"]);
-                    user.CreatedOn= Convert.ToDateTime(dt.Rows[i]["CreatedOn"]);
+                    user.FirstName = dt.Rows[0]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["FirstName"]);
+                    user.LastName = dt.Rows[0]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["LastName"]);
+                    user.Password = dt.Rows[0]["Password"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Password"]);
+                    user.Email = dt.Rows[0]["Email"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Email"]);
+                    //user.Fund = Convert.ToDecimal(dt.Rows[i]["Fund"]);
+                    user.Type = dt.Rows[0]["Type"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Type"]);
+                    //user.Status = Convert.ToInt32(dt.Rows[i]["Status"]);
+                    user.CreatedOn = Convert.ToDateTime(dt.Rows[i]["CreatedOn"]);
                     listUsers.Add(user);
 
                     if (listUsers.Count > 0)
