@@ -1,7 +1,6 @@
 import React from "react";
 import "../Header.css";
 export default function AdminHeader(props) {
-    console.log(props)
 	return (
 		<ul>
 			<li>

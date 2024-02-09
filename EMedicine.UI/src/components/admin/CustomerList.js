@@ -1,7 +1,23 @@
 import React from "react";
+import { useState, useEffect, useRef } from "react";
 import AdminHeader from "./AdminHeader";
 import Table from "@mui/joy/Table";
+
 export default function CustomerList(props) {
+	const [customerList, setcustomerList] = useState([]);
+	useEffect(() => {
+		const url = "https://localhost:7148/api/Admin/userList";
+		fetch(url)
+			.then((response) => response.json())
+			.then((data) => setcustomerList(data.listUsers))
+			.catch((error) => console.log(error));
+	}, []);
+	console.log(customerList);
+	console.log(customerList[0]);
+	//{
+	//customerList.map((list, index) => {});
+	//}
+
 	return (
 		<>
 			<AdminHeader name={props} />
@@ -10,55 +26,33 @@ export default function CustomerList(props) {
 				aria-label='basic table'
 				stripe='2n'
 				sx={(theme) => ({
-					"& tr > *:first-child": { bgcolor: "success.softBg" },
+					"& tr > *:first-of-type": { bgcolor: "success.softBg" },
 					'& th[scope="col"]': theme.variants.solid.neutral,
 					"& td": theme.variants.soft.neutral,
 				})}>
 				<thead>
 					<tr>
-						<th style={{ width: "40%" }}>Dessert (100g serving)</th>
-						<th>Calories</th>
-						<th>Fat&nbsp;(g)</th>
-						<th>Carbs&nbsp;(g)</th>
-						<th>Protein&nbsp;(g)</th>
+						<th>First Name </th>
+						<th>lastName</th>
+						<th>Email</th>
+						<th>Fund</th>
+						<th>Type</th>
+						<th>status</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>Frozen yoghurt</td>
-						<td>159</td>
-						<td>6</td>
-						<td>24</td>
-						<td>4</td>
-					</tr>
-					<tr>
-						<td>Ice cream sandwich</td>
-						<td>237</td>
-						<td>9</td>
-						<td>37</td>
-						<td>4.3</td>
-					</tr>
-					<tr>
-						<td>Eclair</td>
-						<td>262</td>
-						<td>16</td>
-						<td>24</td>
-						<td>6</td>
-					</tr>
-					<tr>
-						<td>Cupcake</td>
-						<td>305</td>
-						<td>3.7</td>
-						<td>67</td>
-						<td>4.3</td>
-					</tr>
-					<tr>
-						<td>Gingerbread</td>
-						<td>356</td>
-						<td>16</td>
-						<td>49</td>
-						<td>3.9</td>
-					</tr>
+					{customerList.map((list, index) => {
+						return (
+							<tr>
+								<td key={index}>{list.firstName}</td>
+								<td key={index + 1}>{list.lastName}</td>
+								<td key={index + 2}>{list.email}</td>
+								<td key={index + 3}>{list.fund}</td>
+								<td key={index + 4}>{list.type}</td>
+								<td key={index + 5}>{list.status}</td>
+							</tr>
+						);
+					})}
 				</tbody>
 			</Table>
 		</>
