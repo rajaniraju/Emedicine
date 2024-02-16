@@ -16,9 +16,9 @@ function Header({ user }) {
 				<Navbar.Collapse id='basic-navbar-nav'>
 					<Nav className='mr-auto' bg='dark'>
 						<Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-						<Nav.Link href='/myorders'>Orders</Nav.Link>
-						<Nav.Link href='/profile'>Profile</Nav.Link>
-						<Nav.Link href='/products'>Medicines</Nav.Link>
+						<Nav.Link href='/myorders'>MyOrders</Nav.Link>
+						<Nav.Link href='/profile'>MyProfile</Nav.Link>
+						<Nav.Link href='/products'>All Products</Nav.Link>
 						<Nav.Link href='/cart'>Cart</Nav.Link>
 						<Nav.Link href='/profile'>Welcome User</Nav.Link>
 						<Nav.Link href='/'>Logout</Nav.Link>

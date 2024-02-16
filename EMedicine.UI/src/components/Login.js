@@ -90,7 +90,7 @@ function Login() {
 
 	return activeUser && isLoggedIn ? (
 		isadmin ? (
-			<Admindashboard user={userObject} />
+			<Admindashboard />
 		) : (
 			<>
 				<Dashboard />
