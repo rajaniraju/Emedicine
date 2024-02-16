@@ -292,6 +292,8 @@ namespace EMedicineBe.Models
             List<Users> listUsers = new List<Users>();
             SqlDataAdapter adapter = new SqlDataAdapter("sp_UserList", connection);
             adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand.Parameters.AddWithValue("@rowOffset",0);
+            adapter.SelectCommand.Parameters.AddWithValue("@fetchNextRows", 8);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
 
@@ -302,12 +304,12 @@ namespace EMedicineBe.Models
 
                     Users user = new Users();
                     user.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                    user.FirstName = dt.Rows[0]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["FirstName"]);
-                    user.LastName = dt.Rows[0]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["LastName"]);
-                    user.Password = dt.Rows[0]["Password"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Password"]);
-                    user.Email = dt.Rows[0]["Email"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Email"]);
+                    user.FirstName = dt.Rows[i]["FirstName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["FirstName"]);
+                    user.LastName = dt.Rows[i]["LastName"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["LastName"]);
+                    user.Password = dt.Rows[i]["Password"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Password"]);
+                    user.Email = dt.Rows[i]["Email"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Email"]);
                     //user.Fund = Convert.ToDecimal(dt.Rows[i]["Fund"]);
-                    user.Type = dt.Rows[0]["Type"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Type"]);
+                    user.Type = dt.Rows[i]["Type"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Type"]);
                     //user.Status = Convert.ToInt32(dt.Rows[i]["Status"]);
                     user.CreatedOn = Convert.ToDateTime(dt.Rows[i]["CreatedOn"]);
                     listUsers.Add(user);

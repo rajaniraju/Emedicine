@@ -1,38 +1,31 @@
 //import React, { useEffect, useState } from "react";
 import "./Header.css";
-
-function Header(props) {
+import { Link } from "react-router-dom";
+import { Navbar, Nav, NavDropdown, NavLink } from "react-bootstrap";
+import Dashboard from "../components/users/Dashboard";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Orders from "../components/users/Orders";
+function Header({ user }) {
 	//const [user, setUser] = useState(" ");
-	
-
-
+	//console.log(user);
 	return (
-		<ul>
-			<li>
-				<a href='/dashboard'>Dashboard</a>
-			</li>
-			<li>
-				<a href='/myorders'>Orders</a>
-			</li>
-			<li>
-				<a href='/profile'>Profile</a>
-			</li>
-			<li>
-				<a href='/cart'>Cart</a>
-			</li>
-			<li>
-				<a href='/products'>Medicines</a>
-			</li>
-			<li className='rightlist'>
-				<a href='/'>Logout</a>
-			</li>
-			<li className='rightlist'>
-				<a href='/profile'>{props.name.user}</a>
-			</li>
-			<li className='rightlist'>
-				<a href='/profile'> Welcome User </a>
-			</li>
-		</ul>
+		<div className='Links'>
+			<Navbar bg='dark' expand='lg'>
+				<Navbar.Brand>EMedicine</Navbar.Brand>
+
+				<Navbar.Collapse id='basic-navbar-nav'>
+					<Nav className='mr-auto' bg='dark'>
+						<Nav.Link href='/dashboard'>Dashboard</Nav.Link>
+						<Nav.Link href='/myorders'>Orders</Nav.Link>
+						<Nav.Link href='/profile'>Profile</Nav.Link>
+						<Nav.Link href='/products'>Medicines</Nav.Link>
+						<Nav.Link href='/cart'>Cart</Nav.Link>
+						<Nav.Link href='/profile'>Welcome User</Nav.Link>
+						<Nav.Link href='/'>Logout</Nav.Link>
+					</Nav>
+				</Navbar.Collapse>
+			</Navbar>
+		</div>
 	);
 }
 

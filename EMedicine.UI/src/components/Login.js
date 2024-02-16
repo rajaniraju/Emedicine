@@ -1,6 +1,7 @@
-import * as React from "react";
+import React from "react";
 import { useState, useEffect } from "react";
 import { useColorScheme } from "@mui/joy/styles";
+import { useProperties } from "./PropertyProvider";
 import Sheet from "@mui/joy/Sheet";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Typography from "@mui/joy/Typography";
@@ -12,9 +13,8 @@ import Link from "@mui/joy/Link";
 import axios from "axios";
 import Dashboard from "./users/Dashboard";
 import Admindashboard from "./admin/AdminDashboard";
-
+import Header from "./Header";
 function ModeToggle() {
-	const { mode, setMode } = useColorScheme();
 	const [mounted, setMounted] = React.useState(false);
 
 	// necessary for server-side rendering
@@ -26,23 +26,18 @@ function ModeToggle() {
 		return <Button variant='soft'>Change mode</Button>;
 	}
 
-	return (
-		<Button
-			variant='soft'
-			onClick={() => {
-				setMode(mode === "light" ? "dark" : "light");
-			}}>
-			{mode === "light" ? "Turn dark" : "Turn light"}
-		</Button>
-	);
+	return <Button mode='dark' variant='soft'></Button>;
 }
 
 function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [activeUser, setActiveuser] = useState(false);
-	const [username, setUserName] = useState(" ");
+	const [userObject, setUserObject] = useState([]);
 	const [isadmin, setIsadmin] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const { dispatch } = useProperties();
+
 	var responseData = " ";
 
 	const handleEmailChange = (event) => {
@@ -52,10 +47,11 @@ function Login() {
 	const handlePasswordChange = (event) => {
 		setPassword(event.target.value);
 	};
+
 	useEffect(() => {
-		console.log(username);
+		console.log(userObject);
 		console.log(isadmin);
-	}, [username, isadmin]);
+	}, [userObject, isadmin]);
 	const getUser = async (e) => {
 		e.preventDefault();
 		const data = {
@@ -71,26 +67,34 @@ function Login() {
 			console.log(response.data);
 
 			responseData = response.data;
-			console.log(responseData.user);
+			console.log(responseData);
 		} catch (error) {
 			console.log(error);
 		}
 
 		if (responseData.statusCode === 200) {
 			setActiveuser(true);
-			setUserName(responseData.user.firstName);
+			setUserObject(responseData);
 			if (responseData.user.type === "Admin") {
 				setIsadmin(true);
 			}
+			if (activeUser) {
+				window.localStorage.setItem("isLoggedIn", true);
+				setIsLoggedIn(true);
+			}
 			console.log(responseData.user.firstName);
 		}
+		const fetchedProperties = { user: userObject };
+		dispatch({ type: "SET_PROPERTIES", payload: fetchedProperties });
 	};
 
-	return activeUser ? (
+	return activeUser && isLoggedIn ? (
 		isadmin ? (
-			<Admindashboard user={username} />
+			<Admindashboard user={userObject} />
 		) : (
-			<Dashboard user={username} isadmin={isadmin} />
+			<>
+				<Dashboard />
+			</>
 		)
 	) : (
 		<main>
@@ -148,7 +152,6 @@ function Login() {
 					fontSize='sm'
 					sx={{ alignSelf: "center" }}>
 					Don&apos;t have an account?
-					
 				</Typography>
 			</Sheet>
 		</main>

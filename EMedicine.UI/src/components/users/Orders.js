@@ -4,7 +4,8 @@ import Header from "../Header";
 export default function Orders(props) {
 	return (
 		<>
-			<Header name={props} />
+			{" "}
+			<Header />
 			<div>Orders</div>
 		</>
 	);

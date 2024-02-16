@@ -1,19 +1,15 @@
 /* Add a black background color to the top navigation */
 
   /* Add a color to the active/current link */
-  ul {
+  .Links {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+ 
   background-color: #333;
 }
 .active {
   background-color: #04AA6D;
 }
-li {
-  float: left;
-}
+
 
 li a {
   display: block;
@@ -24,9 +20,25 @@ li a {
 }
 
 /* Change the link color to #111 (black) on hover */
-li a:hover {
-  background-color: #111;
+
+/* Navbar */
+.navbar {
+  background-color: black;/* Background color */
+  border-bottom: 1px solid #dee2e6; /* Border color */
+  padding: 10px 0; /* Vertical and horizontal padding */
 }
-.rightlist{
-  float:right;
+
+
+
+.nav-link {
+  padding: 0.5rem 1rem; /* Link padding */
+  margin: 0 10px; /* Link margin */
+  color:rgb(33, 239, 64); /* Link color */
+  font-size: 1.5rem; /* Link font size */
+  text-decoration: none; /* Remove default link underline */
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #007bff; /* Link color on hover or focus */
 }
