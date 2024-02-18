@@ -144,7 +144,10 @@ function Login() {
 						onChange={handlePasswordChange}
 					/>
 				</FormControl>
-				<Button sx={{ mt: 1 /* margin top */ }} onClick={getUser}>
+				<Button
+					
+					sx={{ mt: 1 /* margin top */ }}
+					onClick={getUser}>
 					Log in
 				</Button>
 				<Typography

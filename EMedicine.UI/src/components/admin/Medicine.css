@@ -1,0 +1,27 @@
+ button  {
+  width:60%;
+  background-color: #04AA6D; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;}
+
+  button:hover {
+    background-color: #b30057;
+  }
+  .modal{
+    width:100px
+  }
+  .modal-header{
+    width:100px
+  }
+  .modal-title{
+    width:100px
+  }
+  
+ 
