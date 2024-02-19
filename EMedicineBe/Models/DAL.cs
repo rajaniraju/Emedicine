@@ -268,7 +268,7 @@ namespace EMedicineBe.Models
             cmd.Parameters.AddWithValue("@ExpDate", medicines.ExpDate);
             cmd.Parameters.AddWithValue("@ImageUrl", medicines.ImageUrl);
             cmd.Parameters.AddWithValue("@Status", medicines.Status);
-            cmd.Parameters.AddWithValue("@Type", medicines.Type);
+            //cmd.Parameters.AddWithValue("@Type", medicines.Type);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
             connection.Close();
