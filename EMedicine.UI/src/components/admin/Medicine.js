@@ -1,7 +1,7 @@
 import React from "react";
 import AdminHeader from "./AdminHeader";
 import { useEffect, useState } from "react";
-
+import moment from "moment";
 import Table from "@mui/joy/Table";
 import { Modal, Stack } from "react-bootstrap";
 import Button from "@mui/joy/Button";
@@ -9,16 +9,21 @@ import Input from "@mui/joy/Input";
 import axios from "axios";
 import ButtonGroup from "@mui/joy/ButtonGroup";
 import Box from "@mui/joy/Box";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import "./Medicine.css";
 
 export default function Medicine(props) {
 	const [show, setShow] = useState("false");
+	const [medicineList, setMedicineList] = useState([]);
 	const [medicineObject, setMedicineObject] = useState({
 		Name: "",
 		Manufacturer: "",
 		UnitPrice: 0,
 		Discount: 0,
 		Quantity: 0,
-		ExpDate: "2/18/2024",
+		ExpDate: "",
 		ImageUrl: "",
 		Status: 0,
 	});
@@ -33,6 +38,7 @@ export default function Medicine(props) {
 		const { name, value } = event.target;
 		setMedicineObject({ ...medicineObject, [name]: value });
 	};
+	//while submittting you are adding hese values to db.
 	const handleSubmit = async () => {
 		//console.log(medicineObject.ExpDate);
 		var inputdateString = medicineObject.ExpDate;
@@ -61,7 +67,25 @@ export default function Medicine(props) {
 			console.log(error);
 		}
 		// To close the Modal after saving changes.
+		setShow(false);
 	};
+
+	useEffect(() => {
+		const url = "https://localhost:7148/api/Admin/medicineList";
+		fetch(url)
+			.then((response) => response.json())
+			.then((data) => setMedicineList(data.listMedicines))
+			.catch((error) => console.log(error));
+
+		setShow(false);
+	}, []);
+	const getEdited = () => {
+		console.log("to be edited");
+	};
+	const getDeleted = () => {
+		console.log("to be deleted");
+	};
+
 	return (
 		<>
 			<AdminHeader name={props} />
@@ -86,7 +110,37 @@ export default function Medicine(props) {
 						<th>status</th>
 					</tr>
 				</thead>
-				<tbody></tbody>
+				<tbody>
+					{medicineList.map((list, index) => {
+						return (
+							<tr>
+								<td key={index + Math.random()}>{list.id}</td>
+								<td key={index + Math.random()}>{list.name}</td>
+								<td key={index + Math.random()}>{list.manufacturer}</td>
+								<td key={index + Math.random()}>{list.unitPrice}</td>
+								<td key={index + Math.random()}>{list.discount}</td>
+								<td key={index + Math.random()}>{list.quantity}</td>
+								<td key={index + Math.random()}>
+									{moment(list.expDate).format()}
+								</td>
+								<td className='cell' key={index + Math.random()}>
+									{list.imageUrl}
+								</td>
+								<td key={index + Math.random()}>{list.status}</td>
+								<td key={index + Math.random()}>
+									<IconButton aria-label='edit' onClick={getEdited}>
+										<EditIcon sx={{ color: "blue" }} />
+									</IconButton>
+								</td>
+								<td key={index + Math.random()}>
+									<IconButton aria-label='delete' onClick={getDeleted}>
+										<DeleteIcon sx={{ color: "red" }} />
+									</IconButton>
+								</td>
+							</tr>
+						);
+					})}
+				</tbody>
 			</Table>
 			<div className='button'>
 				<Button sx={{ sm: 1 /* margin top */ }} onClick={handleOpen}>

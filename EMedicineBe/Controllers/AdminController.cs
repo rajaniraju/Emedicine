@@ -1,6 +1,7 @@
 ﻿using EMedicineBe.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 
 namespace EMedicineBe.Controllers
@@ -15,7 +16,7 @@ namespace EMedicineBe.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        [Route ("addUpdateMedicine")]
+        [Route("addUpdateMedicine")]
 
         public Response addUpdateMedicine(Medicines medicines)
         {
@@ -34,9 +35,22 @@ namespace EMedicineBe.Controllers
         {
             Response response = new Response();
             Dal dal = new Dal();
-            SqlConnection connection= new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            response = dal.userList( connection);
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
+            response = dal.userList(connection);
+            return response;
+        }
+
+        [HttpGet]
+        [Route("medicineList")]
+
+        public Response medicineList()
+        {
+            Response response = new Response();
+            Dal dal = new Dal();
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
+            response = dal.medicineList(connection);
             return response;
         }
     }
 }
+

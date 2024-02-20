@@ -23,5 +23,8 @@
   .modal-title{
     width:100px
   }
+  .cell{
+   overflow-wrap: break-word;
+  }
   
  

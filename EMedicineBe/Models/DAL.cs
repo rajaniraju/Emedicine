@@ -285,6 +285,63 @@ namespace EMedicineBe.Models
 
             return response;
         }
+        
+        public Response medicineList (SqlConnection connection)
+        {
+            Response response = new Response();
+            List<Medicines> listMedicines = new List<Medicines>();
+            SqlDataAdapter adapter = new SqlDataAdapter("sp_MedicineList", connection);
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand.Parameters.AddWithValue("@rowOffset", 0);
+            adapter.SelectCommand.Parameters.AddWithValue("@fetchNextRows", 8);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+
+                    Medicines medicines = new Medicines();
+                    medicines.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                    medicines.Name = dt.Rows[i]["Name"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Name"]);
+                    medicines.Manufacturer = dt.Rows[i]["Manufacturer"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["Manufacturer"]);
+                    medicines.UnitPrice = dt.Rows[i]["UnitPrice"] == DBNull.Value ? 0 : Convert.ToDecimal(dt.Rows[i]["UnitPrice"]);
+                    medicines.Discount= dt.Rows[i]["Discount"] == DBNull.Value ? 0 : Convert.ToDecimal(dt.Rows[i]["Discount"]);
+                    medicines.Quantity = dt.Rows[i]["Quantity"] == DBNull.Value ? 0 : Convert.ToInt32(dt.Rows[i]["Quantity"]);
+                    medicines.ImageUrl = dt.Rows[i]["ImageUrl"] == DBNull.Value ? "" : Convert.ToString(dt.Rows[i]["ImageUrl"]);
+                    medicines.Status = dt.Rows[i]["Status"] == DBNull.Value ? 0 : Convert.ToInt32(dt.Rows[i]["Status"]);
+                    medicines.ExpDate =  Convert.ToDateTime(dt.Rows[i]["Expdate"]); ;
+                    listMedicines.Add(medicines);
+
+                    if (listMedicines.Count > 0)
+                    {
+                        response.StatusCode = 200;
+                        response.StatusMessage = "Medicine details fetched";
+                        response.listMedicines = listMedicines;
+                    }
+
+                    else
+                    {
+                        response.StatusCode = 100;
+                        response.StatusMessage = "Medicine details not available";
+                        response.listMedicines = null;
+                    };
+                }
+            }
+
+            else
+            {
+                response.StatusCode = 100;
+                response.StatusMessage = "Medicine details not available";
+                response.listMedicines = null;
+            }
+            return response;
+        }
+
+    
+
+
 
         public Response userList(SqlConnection connection)
         {
