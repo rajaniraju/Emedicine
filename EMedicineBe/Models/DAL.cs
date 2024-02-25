@@ -285,6 +285,30 @@ namespace EMedicineBe.Models
 
             return response;
         }
+
+        public Response deleteMedicine(Medicines medicines, SqlConnection connection)
+        {
+            Response response = new Response();
+            SqlCommand cmd = new SqlCommand("sp_deleteMedicine", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ID", medicines.ID);
+            connection.Open();
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+            if(i>0)
+            {
+                response.StatusCode = 200;
+                response.StatusMessage = "Row deleted Successfully";
+            }
+            else
+            {
+                response.StatusCode = 100;
+                response.StatusMessage = "Row was not able to delete. Try again ";
+            }
+
+            return response;
+
+        }
         
         public Response medicineList (SqlConnection connection)
         {

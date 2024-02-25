@@ -33,12 +33,12 @@ export default function Medicine(props) {
 	const handleCloseModal = () => {
 		setShow(false);
 	};
-	//Can also do handle change for each feild seperately. that is too much verbose.So we extract the 'name' and 'value' from the input field  using event.target and destrucure the object and computed property names to update the corresponding property in the PersonObject state.
+	//Can also do handle change for each field seperately. that is too much verbose.So we extract the 'name' and 'value' from the input field  using event.target and destrucure the object and computed property names to update the corresponding property in the PersonObject state.
 	const handleChange = (event) => {
 		const { name, value } = event.target;
 		setMedicineObject({ ...medicineObject, [name]: value });
 	};
-	//while submittting you are adding hese values to db.
+	//while submittting you are adding these values to db.
 	const handleSubmit = async () => {
 		//console.log(medicineObject.ExpDate);
 		var inputdateString = medicineObject.ExpDate;
@@ -82,10 +82,36 @@ export default function Medicine(props) {
 	const getEdited = () => {
 		console.log("to be edited");
 	};
-	const getDeleted = () => {
+	const handleDelete = async (id) => {
+		var inputdateString = "02-18-2029";
+		const [month, day, year] = inputdateString.split("/");
+		const dateObject = new Date(`${year}-${month}-${day}`);
+		var isoDateString = dateObject.toDateString;
 		console.log("to be deleted");
+		const data = {
+			id: id,
+			name: "string",
+			manufacturer: "string",
+			unitPrice: 0,
+			discount: 0,
+			quantity: 0,
+			date: isoDateString,
+			imageUrl: "string",
+			status: 0,
+		};
+		const url = `https://localhost:7148/api/Admin/deleteMedicine`;
+		try {
+			const response = await axios.delete(url, {
+				headers: {
+					Authorization: "Bearer token",
+				},
+				data,
+			});
+			console.log(response);
+		} catch (error) {
+			console.log(error);
+		}
 	};
-
 	return (
 		<>
 			<AdminHeader name={props} />
@@ -133,7 +159,9 @@ export default function Medicine(props) {
 									</IconButton>
 								</td>
 								<td key={index + Math.random()}>
-									<IconButton aria-label='delete' onClick={getDeleted}>
+									<IconButton
+										aria-label='delete'
+										onClick={() => handleDelete(list.id)}>
 										<DeleteIcon sx={{ color: "red" }} />
 									</IconButton>
 								</td>

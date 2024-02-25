@@ -51,6 +51,18 @@ namespace EMedicineBe.Controllers
             response = dal.medicineList(connection);
             return response;
         }
+
+        [HttpDelete]
+        [Route("deleteMedicine")]
+
+        public Response deleteMedicine(Medicines medicines)
+        {
+            Response response = new Response();
+            Dal dal = new Dal();
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
+            response = dal.deleteMedicine(medicines, connection);
+            return response;
+        }
     }
 }
 
