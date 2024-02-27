@@ -13,6 +13,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import "./Medicine.css";
+import { WindowSharp } from "@mui/icons-material";
 
 export default function Medicine(props) {
 	const [show, setShow] = useState("false");
@@ -40,11 +41,12 @@ export default function Medicine(props) {
 	};
 	//while submittting you are adding these values to db.
 	const handleSubmit = async () => {
-		//console.log(medicineObject.ExpDate);
+		console.log(medicineObject.ExpDate);
 		var inputdateString = medicineObject.ExpDate;
-		const [month, day, year] = inputdateString.split("/");
-		const dateObject = new Date(`${year}-${month}-${day}`);
-		var isoDateString = dateObject.toISOString();
+		var isoDateString = moment(inputdateString.expDate).format();
+		//const [month, day, year] = inputdateString.split("/");
+		//const dateObject = new Date(`${year}-${month}-${day}`);
+		//var isoDateString = dateObject.toDateString();
 
 		const data = {
 			name: medicineObject.Name,
@@ -58,7 +60,7 @@ export default function Medicine(props) {
 		};
 
 		console.log(data.status);
-		const url = "https://localhost:7148/api/Admin/addUpdateMedicine";
+		const url = "https://localhost:7148/api/Admin/addMedicine";
 		console.log(data);
 		try {
 			const response = await axios.post(url, data);
@@ -68,6 +70,7 @@ export default function Medicine(props) {
 		}
 		// To close the Modal after saving changes.
 		setShow(false);
+		window.location.reload();
 	};
 
 	useEffect(() => {
@@ -111,6 +114,7 @@ export default function Medicine(props) {
 		} catch (error) {
 			console.log(error);
 		}
+		window.location.reload();
 	};
 	return (
 		<>

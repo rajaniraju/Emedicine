@@ -255,10 +255,10 @@ namespace EMedicineBe.Models
 
         // For admin;
 
-        public Response addUpdateMedicine(Medicines medicines, SqlConnection connection)
+        public Response addMedicine(Medicines medicines, SqlConnection connection)
         {
             Response response = new Response();
-            SqlCommand cmd = new SqlCommand("sp_addUpdateMedicine", connection);
+            SqlCommand cmd = new SqlCommand("sp_addMedicine", connection);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Name", medicines.Name);
             cmd.Parameters.AddWithValue("@Manufacturer", medicines.Manufacturer);
@@ -268,6 +268,7 @@ namespace EMedicineBe.Models
             cmd.Parameters.AddWithValue("@ExpDate", medicines.ExpDate);
             cmd.Parameters.AddWithValue("@ImageUrl", medicines.ImageUrl);
             cmd.Parameters.AddWithValue("@Status", medicines.Status);
+           
             //cmd.Parameters.AddWithValue("@Type", medicines.Type);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
@@ -309,7 +310,38 @@ namespace EMedicineBe.Models
             return response;
 
         }
-        
+        public Response updateMedicine(Medicines medicines, SqlConnection connection)
+        {
+            Response response = new Response();
+            SqlCommand cmd = new SqlCommand("sp_updateMedicine", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@Name", medicines.Name);
+            cmd.Parameters.AddWithValue("@Manufacturer", medicines.Manufacturer);
+            cmd.Parameters.AddWithValue("@UnitPrice", medicines.UnitPrice);
+            cmd.Parameters.AddWithValue("@Discount", medicines.Discount);
+            cmd.Parameters.AddWithValue("@Quantity", medicines.Quantity);
+            cmd.Parameters.AddWithValue("@ExpDate", medicines.ExpDate);
+            cmd.Parameters.AddWithValue("@ImageUrl", medicines.ImageUrl);
+            cmd.Parameters.AddWithValue("@Status", medicines.Status);
+            cmd.Parameters.AddWithValue("@ID",medicines.ID);
+            //cmd.Parameters.AddWithValue("@Type", medicines.Type);
+            connection.Open();
+            int i = cmd.ExecuteNonQuery();
+            connection.Close();
+            if (i > 0)
+            {
+                response.StatusCode = 200;
+                response.StatusMessage = "Medicines Added and updated Successfully";
+            }
+            else
+            {
+                response.StatusCode = 100;
+                response.StatusMessage = "Medicines did not save. Try again ";
+            }
+
+            return response;
+        }
+
         public Response medicineList (SqlConnection connection)
         {
             Response response = new Response();

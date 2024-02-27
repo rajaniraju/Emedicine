@@ -16,14 +16,14 @@ namespace EMedicineBe.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        [Route("addUpdateMedicine")]
+        [Route("addMedicine")]
 
-        public Response addUpdateMedicine(Medicines medicines)
+        public Response addMedicine(Medicines medicines)
         {
             Response response = new Response();
             Dal dal = new Dal();
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
-            response = dal.addUpdateMedicine(medicines, connection);
+            response = dal.addMedicine(medicines, connection);
             return response;
         }
 
@@ -49,6 +49,17 @@ namespace EMedicineBe.Controllers
             Dal dal = new Dal();
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
             response = dal.medicineList(connection);
+            return response;
+        }
+        [HttpPost]
+        [Route("updateMedicine")]
+
+        public Response updateMedicine(Medicines medicines)
+        {
+            Response response = new Response();
+            Dal dal = new Dal();
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("EMedCS").ToString());
+            response = dal.updateMedicine(medicines, connection);
             return response;
         }
 
