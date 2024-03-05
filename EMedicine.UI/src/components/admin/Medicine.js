@@ -15,7 +15,7 @@ import "./Medicine.css";
 
 export default function Medicine(props) {
 	const [id, setid] = useState(0);
-	const [editFeature, seteditFeature] = useState("false");
+	const [editFeature, seteditFeature] = useState(false);
 	const [listToEdit, setlistToEdit] = useState({
 		name: "",
 		manufacturer: "",
@@ -143,6 +143,7 @@ export default function Medicine(props) {
 		} catch (error) {
 			console.log(error);
 		}
+		window.location.reload();
 	};
 
 	const handleDelete = async (id) => {
